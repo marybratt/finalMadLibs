@@ -16,9 +16,9 @@ import javax.swing.border.SoftBevelBorder;
 
 public class MadLibsGui extends JFrame {
 	public  JTextField textField;
-	public  static String message;
+	public  static String message;// holds the message to show what type of word is needed
 	private static JTextField questionTextField;
-	public static int ctrIndex = 0;
+	public static int ctrIndex = 0; // is used for the index on the arrays
 	// The story I have used was found on 
 	// https://docs.google.com/viewer?url=http://www.scholastic.ca/clubs/images/activities/ACT_HalloweenMadLibs_10_2012.pdf
 	// declare global arrays and populate the type of words needed
@@ -26,7 +26,7 @@ public class MadLibsGui extends JFrame {
 				"Adverb", "Exclamation", "Friend's Name", "Celebrity", "Silly Word", "Number",
 				"Adjective", "Noun (Plural)", "Adjective", "Verb (Past Tense)", "Body Part (Plural)", 
 				"Verb", "Noun (Plural)", "Verb (ending in -ing)", "Noun (Plural)", "Adjective"};
-			public static String [] wordArray = new String[22];
+			public static String [] wordArray = new String[22]; //used to hold the user input for output to the story
 			
 			
 	public MadLibsGui() {
@@ -53,16 +53,11 @@ public class MadLibsGui extends JFrame {
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (ctrIndex <  wordTypeArray.length ) {
-					updateWordArray();
-//					if (ctrIndex < wordTypeArray.length - 1) {
+					updateWordArray(); // method called to update the wordArray - index matches wordTypeArray
 					ctrIndex++;
-					processWords();
+					processWords(); // updates the message to be displayed using the next word in wordTypeArray
 					}
 				}
-//				else if (ctrIndex >= wordTypeArray.length) {
-//					printStory();
-//				}
-//			}
 		});
 		textField.setBounds(574, 225, 161, 54);
 		getContentPane().add(textField);
@@ -85,17 +80,22 @@ public class MadLibsGui extends JFrame {
 		
 		textField.requestFocusInWindow();// used to set the cursor to this text field for user entry
 	}
+	
 		private void updateWordArray() {
+			// method called to update the wordArray - index matches wordTypeArray
 			wordArray[ctrIndex] = textField.getText();
 		//	System.out.println(wordArray[ctrIndex] + " " + ctrIndex);
 			textField.setText(" ");
 			textField.requestFocusInWindow();
+			 // call the print story once the ctrIndex reaches the final word in the WordTypeArray
+			// uses length - 1 because the counter is 1 ahead the length
 			if (ctrIndex == wordTypeArray.length - 1) {
 				printStory();
 			}
 		}
+		
 		public static void processWords() {
-			
+			// updates the message to be displayed using the next word in wordTypeArray
 				if (ctrIndex < wordTypeArray.length) {
 				questionTextField.setText("Please enter a/an " + wordTypeArray[ctrIndex] + ":");
 			//	System.out.println(questionTextField.getText() + " " + ctrIndex);
@@ -104,7 +104,7 @@ public class MadLibsGui extends JFrame {
 		}
 		
 		private static void printStory() {
-			// Display story with user input words inserted in the story
+			// Display story with user input words inserted in the story, uses another popup window
 			JFrame f = new JFrame("The Best Halloween Party Ever");
 			f.setSize(1300, 600);// set the size of the frame
 			f.setResizable(false); // make the frame so that it cannot be resized
@@ -131,16 +131,4 @@ public class MadLibsGui extends JFrame {
 			f.getContentPane().add(story);// add the text field to the JFrame
 			f.setVisible(true);//make visible
 		}
-
-
-//	public static void main(String[] args) {
-//		questionTextField = new JTextField();
-//		questionTextField.setText("Please enter a/an " + wordTypeArray[0] + ":");
-//		questionTextField.repaint();
-//	
-//	//	new MadLibsGui();
-//		processWords();
-//		
-//
-//	}
 }
